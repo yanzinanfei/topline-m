@@ -7,7 +7,8 @@
     <van-cell-group>
       <van-field v-model="user.mobile" class="iconfont icon-shouji" clearable placeholder="请输入手机号" />
       <van-field v-model="user.code" class="iconfont icon-iconfontmima1" placeholder="请输入验证码">
-        <van-button slot="button" size="small" type="primary" round>发送验证码</van-button>
+        <van-count-down v-if="isCountDownShow" slot="button" :time="1000 * 60" format="ss s" />
+        <van-button v-else slot="button" size="small" type="primary" round>发送验证码</van-button>
       </van-field>
     </van-cell-group>
     <!-- 登录表单结束 -->
@@ -28,7 +29,8 @@ export default {
       user: {
         mobile: '', // 手机号
         code: '' // 验证码
-      }
+      },
+      isCountDownShow: false // 是否显示倒计时
     }
   },
   methods: {
