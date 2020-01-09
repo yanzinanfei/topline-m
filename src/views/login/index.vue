@@ -9,7 +9,7 @@
         1. 使用ValidationObserver 组件把需要验证的整个表单包起来
         2、使用ValidationProvider 组件把具体的表单元素包起来，例如input
     -->
-    <ValidationObserver>
+    <ValidationObserver ref="form">
       <ValidationProvider name="手机号" rules="required" v-slot="{ errors }">
         <van-field
           v-model="user.mobile"
@@ -17,7 +17,7 @@
           clearable
           placeholder="请输入手机号"
         />
-        <span> {{ errors[0] }} </span>
+        <span>{{ errors[0] }}</span>
       </ValidationProvider>
 
       <ValidationProvider>
@@ -67,12 +67,22 @@ export default {
       // 1.获取表单数据
       const user = this.user
       // 2.表单验证
+      // this.$refs.form.validate().then(success => {
+      //   if (!success) {
 
+      //   }
+      // })
+      const success = await this.$refs.form.validate()
+
+      if (!success) {
+        console.log('表单验证失败')
+        return // 获取验证失败的错误消息，轻提示
+      }
       // 开启登录中 loading
       this.$toast.loading({
         duration: 0, // 持续展示 toast
-        forbidClick: true,
-        message: '登录中....' // 是否禁止北京点击
+        forbidClick: true, // 是否禁止背景点击
+        message: '登录中....'
       })
 
       // 3.请求登录
