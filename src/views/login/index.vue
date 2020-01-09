@@ -36,17 +36,31 @@ export default {
       // 1.获取表单数据
       const user = this.user
       // 2.表单验证
-      // 3.请求登录
-      const res = await request({
-        method: 'POST',
-        url: '/app/v1_0/authorizations',
-        // headers: {}, // 请求头参数
-        // params: {}, // Query 查询参数
-        data: user // body 请求体参数
+
+      // 开启登录中 loading
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        message: '登录中....' // 是否禁止北京点击
       })
-      console.log(res)
-      // 4.根据后端返回结果执行后续业务处理
-    }
+
+      // 3.请求登录
+      try {
+        const res = await request({
+          method: 'POST',
+          url: '/app/v1_0/authorizations',
+          // headers: {}, // 请求头参数
+          // params: {}, // Query 查询参数
+          data: user // body 请求体参数
+        })
+        console.log(res)
+        // 提示成功
+        this.$toast.success('登录成功')
+      } catch (err) {
+        console.log('登录失败', err)
+        this.$toast.fail('登录失败')
+      }
+    } // 4.根据后端返回结果执行后续业务处理
   }
 }
 </script>
