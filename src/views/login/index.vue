@@ -74,5 +74,8 @@ export default {
       background-color: #6db4fb;
     }
   }
+  .van-cell {
+    align-items: center;
+  }
 }
 </style>
