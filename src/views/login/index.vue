@@ -4,27 +4,43 @@
     <van-nav-bar title="登录" />
     <!-- 导航栏结束 -->
     <!-- 登录表单开始 -->
-    <van-cell-group>
-      <van-field v-model="user.mobile" class="iconfont icon-shouji" clearable placeholder="请输入手机号" />
-      <van-field v-model="user.code" class="iconfont icon-iconfontmima1" placeholder="请输入验证码">
-        <van-count-down
-          v-if="isCountDownShow"
-          slot="button"
-          :time="1000 * 60"
-          format="ss s"
-          @finish="isCountDownShow = false"
+    <!--
+      表单验证：
+        1. 使用ValidationObserver 组件把需要验证的整个表单包起来
+        2、使用ValidationProvider 组件把具体的表单元素包起来，例如input
+    -->
+    <ValidationObserver>
+      <ValidationProvider name="手机号" rules="required" v-slot="{ errors }">
+        <van-field
+          v-model="user.mobile"
+          class="iconfont icon-shouji"
+          clearable
+          placeholder="请输入手机号"
         />
-        <van-button
-          v-else
-          slot="button"
-          size="small"
-          type="primary"
-          round
-          @click="onSendSmsCode"
-        >发送验证码</van-button>
-      </van-field>
-    </van-cell-group>
-    <!-- 登录表单结束 -->
+        <span> {{ errors[0] }} </span>
+      </ValidationProvider>
+
+      <ValidationProvider>
+        <van-field v-model="user.code" class="iconfont icon-iconfontmima1" placeholder="请输入验证码">
+          <van-count-down
+            v-if="isCountDownShow"
+            slot="button"
+            :time="1000 * 60"
+            format="ss s"
+            @finish="isCountDownShow = false"
+          />
+          <van-button
+            v-else
+            slot="button"
+            size="small"
+            type="primary"
+            round
+            @click="onSendSmsCode"
+          >发送验证码</van-button>
+        </van-field>
+        <!-- 登录表单结束 -->
+      </ValidationProvider>
+    </ValidationObserver>
     <!-- 登录按钮 -->
     <div class="login-btn-wrap">
       <van-button type="info" @click="onLogin">登录</van-button>
