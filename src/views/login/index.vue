@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import request from '@/utils/request'
+import { login } from '@/api/user'
 export default {
   name: 'LoginPage',
   data () {
@@ -46,13 +46,7 @@ export default {
 
       // 3.请求登录
       try {
-        const res = await request({
-          method: 'POST',
-          url: '/app/v1_0/authorizations',
-          // headers: {}, // 请求头参数
-          // params: {}, // Query 查询参数
-          data: user // body 请求体参数
-        })
+        const res = await login(user)
         console.log(res)
         // 提示成功
         this.$toast.success('登录成功')
