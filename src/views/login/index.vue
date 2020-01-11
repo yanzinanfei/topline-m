@@ -97,8 +97,10 @@ export default {
 
       // 3.请求登录
       try {
-        const res = await login(user)
-        console.log(res)
+        const { data } = await login(user)
+        // 将登录成功获取到的用户token 相关数据存储到Vuex容器
+        this.$store.commit('setUser', data.data)
+
         // 提示成功
         this.$toast.success('登录成功')
       } catch (err) {
