@@ -51,6 +51,7 @@
 
 <script>
 import { login, getSmsCode } from '@/api/user'
+import { validate } from 'vee-validate'
 export default {
   name: 'LoginPage',
   data () {
@@ -107,8 +108,23 @@ export default {
     }, // 4.根据后端返回结果执行后续业务处理
     async onSendSmsCode () {
       try {
-        const { mobile } = this.user
         // 1. 验证手机号格式是否有效
+        const { mobile } = this.user
+
+        // 参数1：要验证的数据
+        // 参数2：验证规则
+        // 参数3：一个可选的配置对象，例如配置错误消息字段名称 name
+        // 返回值：{ valid, errors, ... }
+        //          valid: 验证是否成功，成功 true，失败 false
+        //          errors：一个数组，错误提示消息
+        const validateResult = await validate(mobile, 'required|mobile', {
+          name: '手机号'
+        })
+
+        if (!validateResult.valid) {
+          this.$toast(validateResult.errors[0])
+          return
+        }
         // 2. 请求发送短信验证码
         const res = await getSmsCode(mobile)
         console.log(res)
