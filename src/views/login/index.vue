@@ -10,17 +10,17 @@
         2、使用ValidationProvider 组件把具体的表单元素包起来，例如input
     -->
     <ValidationObserver ref="form">
-      <ValidationProvider name="手机号" rules="required" v-slot="{ errors }">
+      <ValidationProvider name="手机号" rules="required" immediate>
         <van-field
           v-model="user.mobile"
           class="iconfont icon-shouji"
           clearable
           placeholder="请输入手机号"
         />
-        <span>{{ errors[0] }}</span>
+        <!-- <span>{{ errors[0] }}</span> -->
       </ValidationProvider>
 
-      <ValidationProvider>
+      <ValidationProvider name="验证码" rules="required" immediate>
         <van-field v-model="user.code" class="iconfont icon-iconfontmima1" placeholder="请输入验证码">
           <van-count-down
             v-if="isCountDownShow"
@@ -76,6 +76,15 @@ export default {
 
       if (!success) {
         console.log('表单验证失败')
+        // 注意：如果你需要在 JS 验证中能马上获取到错误消息
+        // 必须给每一个 ValidationProvider 配置 immediate
+        const errors = this.$refs.form.errors
+        for (let key in errors) {
+          const item = errors[key]
+          if (item[0]) {
+            this.$toast(item[0]) // 找到第一个有错误的消息，给出提示，停止遍历
+          }
+        }
         return // 获取验证失败的错误消息，轻提示
       }
       // 开启登录中 loading
