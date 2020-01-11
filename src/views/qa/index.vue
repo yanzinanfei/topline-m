@@ -4,10 +4,18 @@
 
 <script>
 export default {
-  name: 'QaPage'
+  name: 'QaPage',
+  components: {},
+  props: {},
+  data () {
+    return {}
+  },
+  computed: {},
+  watch: {},
+  created () {},
+  mounted () {},
+  methods: {}
 }
 </script>
 
-<style>
-
-</style>
+<style scoped></style>
