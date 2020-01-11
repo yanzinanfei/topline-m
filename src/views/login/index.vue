@@ -10,7 +10,7 @@
         2、使用ValidationProvider 组件把具体的表单元素包起来，例如input
     -->
     <ValidationObserver ref="form">
-      <ValidationProvider name="手机号" rules="required" immediate>
+      <ValidationProvider name="手机号" rules="required|mobile" immediate>
         <van-field
           v-model="user.mobile"
           class="iconfont icon-shouji"
@@ -20,7 +20,7 @@
         <!-- <span>{{ errors[0] }}</span> -->
       </ValidationProvider>
 
-      <ValidationProvider name="验证码" rules="required" immediate>
+      <ValidationProvider name="验证码" rules="required|code" immediate>
         <van-field v-model="user.code" class="iconfont icon-iconfontmima1" placeholder="请输入验证码">
           <van-count-down
             v-if="isCountDownShow"
@@ -83,9 +83,9 @@ export default {
           const item = errors[key]
           if (item[0]) {
             this.$toast(item[0]) // 找到第一个有错误的消息，给出提示，停止遍历
+            return // 获取验证失败的错误消息，轻提示
           }
         }
-        return // 获取验证失败的错误消息，轻提示
       }
       // 开启登录中 loading
       this.$toast.loading({
@@ -102,7 +102,7 @@ export default {
         this.$toast.success('登录成功')
       } catch (err) {
         console.log('登录失败', err)
-        this.$toast.fail('登录失败')
+        this.$toast.fail('登录失败，手机号或验证码不正确')
       }
     }, // 4.根据后端返回结果执行后续业务处理
     async onSendSmsCode () {

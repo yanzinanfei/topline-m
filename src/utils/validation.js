@@ -21,3 +21,17 @@ Object.keys(rules).forEach(rule => {
     message: messages[rule]
   })
 })
+// 添加验证手机号
+extend('mobile', {
+  validate: value => {
+    return /^1(3|5|7|8|9)\d{9}$/.test(value)
+  },
+  message: '手机号格式错误'
+})
+// 添加验证验证码
+extend('code', {
+  validate: value => {
+    return /^\d{6}$/.test(value)
+  },
+  message: '验证码格式错误'
+})
