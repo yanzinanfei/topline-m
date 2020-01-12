@@ -2,8 +2,11 @@ body {
   background: #f5f7f9;
 }
 .van-nav-bar {
-  background-color: #3296fa;
+  background: #3296fa;
 }
 .van-nav-bar .van-nav-bar__title {
+  color: #fff;
+}
+.van-nav-bar .van-icon {
   color: #fff;
 }

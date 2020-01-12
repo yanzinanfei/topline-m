@@ -37,7 +37,7 @@ const routes = [{
   ]
 },
 {
-  path: '/user/:userID',
+  path: '/user/:userId',
   name: 'user',
   component: () => import('@/views/user')
 }

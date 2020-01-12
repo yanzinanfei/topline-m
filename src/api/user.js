@@ -20,10 +20,18 @@ export const getSmsCode = mobile => {
   })
 }
 // 获取当前登录用户信息
-export const getUserInfo = mobile => {
+export const getUserInfo = () => {
   // 具体请求代码
   return request({
     method: 'GET',
     url: '/app/v1_0/user'
+  })
+}
+
+// 获取指定用户信息
+export const getUserById = userId => {
+  return request({
+    method: 'GET',
+    url: `/app/v1_0/users/${userId}`
   })
 }
