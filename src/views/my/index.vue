@@ -56,7 +56,7 @@
     </van-cell-group>
 
     <van-cell-group v-if="$store.state.user">
-      <van-cell style="text-align: center;" title="退出登录" clickable />
+      <van-cell style="text-align: center;" title="退出登录" clickable @click="onLogout" />
     </van-cell-group>
     <!-- /其它 -->
   </div>
@@ -83,9 +83,35 @@ export default {
   mounted () {},
   methods: {
     async loadUser () {
-      const { data } = await getUserInfo()
-      this.user = data.data
+      try {
+        const { data } = await getUserInfo()
+        this.user = data.data
+      } catch (err) {
+        console.log(err)
+        this.$toast('获取数据失败')
+      }
+    },
+    async onLogout () {
+      await this.$dialog.confirm({
+        title: '退出提示',
+        message: '确认退出吗？'
+      })
+      // 清除登录状态
+      this.$store.commit('setUser', null)
     }
+    // onLogout () {
+    //   this.$dialog
+    //     .confirm({
+    //       title: '退出提示',
+    //       message: '确认退出吗？'
+    //     })
+    //     .then(() => {
+    //       // 确认执行这里
+    //     })
+    //     .catch(() => {
+    //       // 取消执行这里
+    //     })
+    // }
   }
 }
 </script>
