@@ -17,7 +17,16 @@
     <!-- /频道列表 -->
 
     <!-- 编辑频道 -->
-    <van-popup v-model="isChannelEditShow" position="bottom" :style="{ height: '94%' }" round closeable   close-icon-position="top-left"/>
+    <van-popup
+      v-model="isChannelEditShow"
+      position="bottom"
+      :style="{ height: '94%' }"
+      round
+      closeable
+      close-icon-position="top-left"
+    >
+      <channel-edit />
+    </van-popup>
     <!--/ 编辑频道 -->
   </div>
 </template>
@@ -25,10 +34,12 @@
 <script>
 import { getUserChannels } from '@/api/channel'
 import ArticleList from './components/article-list'
+import ChannelEdit from './components/channel-edit'
 export default {
   name: 'HomePage',
   components: {
-    ArticleList
+    ArticleList,
+    ChannelEdit
   },
   props: {},
   data () {
@@ -69,7 +80,7 @@ export default {
   right: 0;
   line-height: 44px;
   background: #fff;
-  opacity: .7;
+  opacity: 0.7;
 }
 /deep/ .van-tabs__wrap {
   position: fixed;
