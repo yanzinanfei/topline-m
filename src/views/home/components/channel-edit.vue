@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { getAllChannels } from '@/api/channel'
 export default {
   name: 'ChannelEdit',
   components: {},
@@ -24,13 +25,23 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      allChannels: [] // 所有频道
+    }
   },
   watch: {},
   computed: {},
-  methods: {},
-  created () {},
-  mounted () {}
+  created () {
+    this.loadAllChannels()
+  },
+  mounted () {},
+
+  methods: {
+    async loadAllChannels () {
+      const { data } = await getAllChannels()
+      this.allChannels = data.data.channels
+    }
+  }
 }
 </script>
 <style lang="less" scoped>
