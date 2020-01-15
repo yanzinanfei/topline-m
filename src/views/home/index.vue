@@ -80,7 +80,7 @@ export default {
   right: 0;
   line-height: 44px;
   background: #fff;
-  opacity: 0.7;
+  opacity: .7;
 }
 /deep/ .van-tabs__wrap {
   position: fixed;
