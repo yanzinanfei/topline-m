@@ -1,18 +1,36 @@
 <template>
   <div class="channel-edit">
     <van-cell title="我的频道" :border="false">
-      <van-button size="mini" round type="danger">编辑</van-button>
+      <van-button
+        size="mini"
+        round
+        type="danger"
+        plain
+        @click="isEditShow = !isEditShow"
+      >{{isEditShow ? '完成' : '编辑'}}</van-button>
     </van-cell>
-    <van-grid :gutter="10">
-      <van-grid-item v-for="channel in userChannels" :key="channel.id" :text="channel.name" />
+    <van-grid :gutter="10" clickable>
+      <van-grid-item
+        v-for="(channel, index) in userChannels"
+        :key="channel.id"
+        :text="channel.name"
+        @click="onUserChannelClick(index)"
+      >
+        <van-icon v-show="isEditShow && index !== 0" slot="icon" name="close" />
+      </van-grid-item>
     </van-grid>
+
     <van-cell title="推荐频道" :border="false"></van-cell>
     <van-grid :gutter="10">
-      <van-grid-item v-for="channel in remainingChannels" :key="channel.id" :text="channel.name" />
+      <van-grid-item
+        v-for="channel in remainingChannels"
+        :key="channel.id"
+        :text="channel.name"
+        @click="onAdd(channel)"
+      />
     </van-grid>
   </div>
 </template>
-
 <script>
 import { getAllChannels } from '@/api/channel'
 export default {
@@ -26,7 +44,8 @@ export default {
   },
   data () {
     return {
-      allChannels: [] // 所有频道
+      allChannels: [], // 所有频道
+      isEditShow: false
     }
   },
   watch: {},
@@ -55,6 +74,9 @@ export default {
     async loadAllChannels () {
       const { data } = await getAllChannels()
       this.allChannels = data.data.channels
+    },
+    onAdd (channel) {
+      this.userChannels.push(channel)
     }
   }
 }
@@ -62,9 +84,29 @@ export default {
 <style lang="less" scoped>
 .channel-edit {
   padding-top: 40px;
-  // font-size: 16px;
-  /deep/ .van-grid-item__content {
-    background-color: #f4f5f6;
+  .channel-header {
+    font-size: 16px;
+    color: #333;
+  }
+  /deep/ .van-grid-item {
+    width: 80px;
+    height: 43px;
+    position: relative;
+    .van-grid-item__icon-wrapper {
+      position: absolute;
+      top: -14px;
+      right: -6px;
+      .van-icon-close {
+        font-size: 14px;
+      }
+    }
+    .van-grid-item__content {
+      background-color: #f4f5f6;
+    }
+    .van-grid-item__text {
+      font-size: 14px;
+      color: #222;
+    }
   }
 }
 </style>
