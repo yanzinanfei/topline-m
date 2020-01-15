@@ -41,6 +41,7 @@
 </template>
 <script>
 import { getAllChannels } from '@/api/channel'
+import { setItem } from '@/utils/storage'
 export default {
   name: 'ChannelEdit',
   components: {},
@@ -60,7 +61,12 @@ export default {
       isEditShow: false
     }
   },
-  watch: {},
+  watch: {
+    // 当 userChannels 发生变化，会调用该函数
+    userChannels (newVal) {
+      setItem('user-channels', newVal)
+    }
+  },
   computed: {
     remainingChannels () {
       const channels = []
