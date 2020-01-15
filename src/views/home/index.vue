@@ -25,7 +25,7 @@
       closeable
       close-icon-position="top-left"
     >
-      <channel-edit :user-channels="userChannels" @seitch="onChannelSwitch" />
+      <channel-edit :user-channels="userChannels" :active="active" @seitch="onChannelSwitch" />
     </van-popup>
     <!--/ 编辑频道 -->
   </div>
