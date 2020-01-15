@@ -25,7 +25,7 @@
       closeable
       close-icon-position="top-left"
     >
-      <channel-edit :user-channels="userChannels" />
+      <channel-edit :user-channels="userChannels" @seitch="onChannelSwitch" />
     </van-popup>
     <!--/ 编辑频道 -->
   </div>
@@ -65,6 +65,10 @@ export default {
         console.log(err)
         this.$toast('获取频道数据失败')
       }
+    },
+    onChannelSwitch (index) {
+      this.active = index // 切换激活频道
+      this.isChannelEditShow = false // 关闭弹层
     }
   }
 }
@@ -80,7 +84,7 @@ export default {
   right: 0;
   line-height: 44px;
   background: #fff;
-  opacity: .7;
+  opacity: 0.7;
 }
 /deep/ .van-tabs__wrap {
   position: fixed;

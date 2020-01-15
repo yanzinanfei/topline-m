@@ -83,6 +83,8 @@ export default {
       if (this.isEditShow && index !== 0) {
         this.userChannels.splice(index, 1) // 从索引处开始，删除指定的个数
         // 如果是非编辑状态，则执行切换频道状态
+      } else {
+        this.$emit('seitch', index)
       }
     }
   }
