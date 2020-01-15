@@ -1,23 +1,26 @@
 <template>
   <div class="home-container">
     <!-- 导航栏 -->
-    <van-nav-bar title="首页" fixed/>
+    <van-nav-bar title="首页" fixed />
     <!-- /导航栏 -->
 
     <!-- 频道列表 -->
     <van-tabs v-model="active">
       <van-tab :title="channel.name" v-for="channel in userChannels" :key="channel.id">
         <!-- 文章列表 -->
-        <article-list :channel='channel'/>
+        <article-list :channel="channel" />
         <!-- /文章列表 -->
       </van-tab>
     </van-tabs>
     <!-- /频道列表 -->
+
+    <!-- 编辑频道 -->
+    <van-popup v-model="isChannelEditShow" position="bottom" :style="{ height: '94%' }" round closeable   close-icon-position="top-left"/>
+    <!--/ 编辑频道 -->
   </div>
 </template>
 
 <script>
-
 import { getUserChannels } from '@/api/channel'
 import ArticleList from './components/article-list'
 export default {
@@ -29,7 +32,8 @@ export default {
   data () {
     return {
       active: 0, // 控制激活的标签页
-      userChannels: [] // 用户频道列表
+      userChannels: [], // 用户频道列表
+      isChannelEditShow: true
     }
   },
   computed: {},
@@ -58,13 +62,11 @@ export default {
   padding-top: 90px;
   padding-bottom: 50px;
 }
-  /deep/
-  .van-tabs__wrap {
-    position: fixed;
-    top: 46px;
-    left: 0;
-    right: 0;
-    z-index: 1;
-  }
-
+/deep/ .van-tabs__wrap {
+  position: fixed;
+  top: 46px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
 </style>
