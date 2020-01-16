@@ -95,6 +95,7 @@ export default {
 }
 .wap-nav {
   position: fixed;
+  font-size: 18px;
   right: 0;
   line-height: 44px;
   background: #fff;
